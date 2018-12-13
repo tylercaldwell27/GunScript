@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,23 +9,25 @@ public class GunShot : MonoBehaviour
     //text
     public Text ammoText;
     public Text clipText;
-
+    public Text killText;
     //audio Sounds For the players
     public AudioSource gunfire;
-   
+    public AudioSource hitSoundEffect;
 
     RaycastHit hit;//sets a rayCast to hit
 
-   
+    public int moreAmmo = 50;
+    public float kills = 0;
+
     //this is for damaging the enemy
     [SerializeField]
-    float damageEnemy = 10f;// the amount of damage the gun will do
+    float damageEnemy = 30f;// the amount of damage the gun will do
 
     [SerializeField]
     Transform shootPoint;// where the ray cast is going to go from on screen
 
     [SerializeField]
-    int currentAmmo = 12;//ammo left in the gun
+    int currentAmmo = 20;//ammo left in the gun
 
     [SerializeField]
     int ClipSize;//the amount of ammo pere clip
@@ -43,6 +45,8 @@ public class GunShot : MonoBehaviour
     [SerializeField]
     float weaponRange;//how far the weapon can shoot
 
+    
+  
 
 
 
@@ -50,11 +54,17 @@ public class GunShot : MonoBehaviour
     {
         SetAmmoText();
         SetClipText();
-    muzzleFlash.Stop();//turns of the muzzleFlash
-       
-}
+        muzzleFlash.Stop();//turns of the muzzleFlash
+        SetKillsText();
+    }
 
     void Update(){
+
+        if (moreAmmo == 0)
+        {
+            ClipsLeft = ClipsLeft + 15;
+            moreAmmo = 50;
+        }
 
         //if the left mouse button is pressed and the gun has ammo in it
         if (Input.GetButton("Fire1") && currentAmmo > 0){
@@ -65,7 +75,7 @@ public class GunShot : MonoBehaviour
             }
         }
         //if the r key is pressed and theres less then 12 bullets in the gun and the player still has more clips for reloading
-        if (Input.GetButton("Reload") && currentAmmo < 12 && ClipsLeft > 0){
+        if (Input.GetButton("Reload") && currentAmmo < 20 && ClipsLeft > 0){
             ClipsLeft = ClipsLeft - 1;//subtracts one clip from ClipsLeft
             SetClipText();
             
@@ -79,6 +89,9 @@ public class GunShot : MonoBehaviour
             else if (ClipsLeft < 0){
                 Debug.Log("out of ammo");
             }
+
+           
+            
         }
 
 
@@ -102,11 +115,16 @@ public class GunShot : MonoBehaviour
                 //if the object hit was the enemy
                 if (hit.transform.tag == "Enemy")
                 {
-
+                    HitSound();
                     Debug.Log("hit enemy");//prints to debug log that enemy was hit
                     EnemyHealth enemyHealthScript = hit.transform.GetComponent<EnemyHealth>();//sets the enemy health script the remaining health from the enemyhealth var
                     enemyHealthScript.DeductHealth(damageEnemy);//calls the deductHealth methood for class  the enemy health script to deduct the health
-
+                    if(enemyHealthScript.enemyHealth < 0){
+                         kills = kills + 1;
+                        moreAmmo = moreAmmo - 1;// how many kills till you get more ammo
+                        SetKillsText();
+                       
+                    }
                 }
                 else
                 {
@@ -116,10 +134,15 @@ public class GunShot : MonoBehaviour
         }
     }
 
-    //GunFire method
+    //GunFire sound  method
     public void GunFire()
     {
         gunfire.Play();// plays the gun fire sound effect
+    }
+
+    public void HitSound()
+    {
+        hitSoundEffect.Play();// plays the gun fire sound effect
     }
 
     // for usign weapon effects
@@ -139,4 +162,9 @@ public class GunShot : MonoBehaviour
     {
         clipText.text = "Clips Left: " + ClipsLeft.ToString();
     }
+
+    void SetKillsText(){
+        killText.text = "Kills: " + kills.ToString();
+    }
+
 }
