@@ -29,6 +29,9 @@ public class GunShot : MonoBehaviour
 =======
     [SerializeField]
     float damageEnemy = 30f;// the amount of damage the gun will do
+<<<<<<< HEAD
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
+=======
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 
     
@@ -40,6 +43,9 @@ public class GunShot : MonoBehaviour
 =======
     [SerializeField]
     int currentAmmo = 20;//ammo left in the gun
+<<<<<<< HEAD
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
+=======
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 
     
@@ -57,7 +63,11 @@ public class GunShot : MonoBehaviour
 
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     public float weaponRange;//how far the weapon can shoot
+=======
+  
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 =======
   
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
@@ -91,7 +101,10 @@ public class GunShot : MonoBehaviour
         muzzleFlash.Stop();//turns of the muzzleFlash
         SetKillsText();
 <<<<<<< HEAD
+<<<<<<< HEAD
         
+=======
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 =======
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
     }
@@ -197,6 +210,12 @@ public class GunShot : MonoBehaviour
             moreAmmo = 50;
         }
 
+        if (moreAmmo == 0)
+        {
+            ClipsLeft = ClipsLeft + 15;
+            moreAmmo = 50;
+        }
+
         //if the left mouse button is pressed and the gun has ammo in it
         if (Input.GetButton("Fire1") && currentAmmo > 0){
             Shoot();//shoots the gun
@@ -207,7 +226,11 @@ public class GunShot : MonoBehaviour
         }
         //if the r key is pressed and theres less then 12 bullets in the gun and the player still has more clips for reloading
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (Input.GetButton("Reload") && currentAmmo < ClipSize && ClipsLeft > 0){
+=======
+        if (Input.GetButton("Reload") && currentAmmo < 20 && ClipsLeft > 0){
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 =======
         if (Input.GetButton("Reload") && currentAmmo < 20 && ClipsLeft > 0){
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
@@ -256,7 +279,11 @@ public class GunShot : MonoBehaviour
                     EnemyHealth enemyHealthScript = hit.transform.GetComponent<EnemyHealth>();//sets the enemy health script the remaining health from the enemyhealth var
                     enemyHealthScript.DeductHealth(damageEnemy);//calls the deductHealth methood for class  the enemy health script to deduct the health
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if(enemyHealthScript.enemyHealth <= 0){
+=======
+                    if(enemyHealthScript.enemyHealth < 0){
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 =======
                     if(enemyHealthScript.enemyHealth < 0){
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
@@ -308,6 +335,7 @@ public class GunShot : MonoBehaviour
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private void OnGUI()
     {
         float ratio = stamina / maxStamina;
@@ -315,6 +343,8 @@ public class GunShot : MonoBehaviour
         staminaBar.width = rectWidth;
         GUI.DrawTexture(staminaBar, staminaTexture);
     }
+=======
+>>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 =======
 >>>>>>> 739f643bd71e054994b0f7923c14028e64d1748b
 }
